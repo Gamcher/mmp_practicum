@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      dockerfile: ./ensembles/backend/Dockerfile
+    container_name: backend
+    volumes:
+      - ./ensembles/backend:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      dockerfile: ./ensembles/frontend/Dockerfile
+    container_name: frontend
+    volumes:
+      - ./ensembles/frontend:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
